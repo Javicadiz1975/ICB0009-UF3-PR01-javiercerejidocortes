@@ -7,14 +7,30 @@
   "targets": {
     ".NETCoreApp,Version=v8.0": {
       "Cliente/1.0.0": {
+        "dependencies": {
+          "NetworkStreamClass": "1.0.0"
+        },
         "runtime": {
           "Cliente.dll": {}
+        }
+      },
+      "NetworkStreamClass/1.0.0": {
+        "runtime": {
+          "NetworkStreamClass.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
   },
   "libraries": {
     "Cliente/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NetworkStreamClass/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

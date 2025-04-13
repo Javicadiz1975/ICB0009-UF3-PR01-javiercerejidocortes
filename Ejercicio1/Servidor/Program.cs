@@ -1,6 +1,6 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
+using NetworkStreamNS;
 
 namespace Servidor
 {
@@ -32,7 +32,6 @@ namespace Servidor
         static void GestionarVehiculo(TcpClient cliente)
         { 
             int id;
-            string direccion;
 
             // Bloque protegido para asignar ID de forma segura
             lock (lockObj)
@@ -41,18 +40,39 @@ namespace Servidor
                 id = contadorVehiculos;
             }
 
-             // Dirección aleatoria
-            Random rnd = new Random();
-            direccion = rnd.Next(2) == 0 ? "Norte" : "Sur";
-
-            Console.WriteLine("Gestionando nuevo vehículo...");
-            Console.WriteLine($"Vehículo ID: {id}, Dirección asignada: {direccion}");
-
-            // Obtener el NetworkStream
             NetworkStream stream = cliente.GetStream();
-            Console.WriteLine($"Stream obtenido para el vehículo ID {id}");
+            Console.WriteLine("Gestionando nuevo vehículo...");
+
+            //Leer el mensaje inicial del cliente
+            string mensajeInicio = NetworkStreamClass.LeerMensajeNetworkStream(stream);
+
+            if (mensajeInicio == "INICIO")
+            {
+                Console.WriteLine($"Handshake iniciado por cliente.");
+
+                //Enviar el ID al cliente
+                NetworkStreamClass.EscribirMensajeNetworkStream(stream, id.ToString());
+                Console.WriteLine($"ID {id} enviado al cliente.");
+
+                //Esperar confirmación del cliente
+                string confirmacion = NetworkStreamClass.LeerMensajeNetworkStream(stream);
+                if (confirmacion == id.ToString())
+                {
+                    Console.WriteLine($"Cliente confirmó ID correctamente. Vehículo {id} listo.");
+                }
+                else
+                {
+                    Console.WriteLine("Cliente devolvió ID incorrecto. Finalizando conexión.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No se recibió mensaje INICIO. Finalizando conexión.");
+            }
 
             cliente.Close();
+            
+
         }
     }
 }

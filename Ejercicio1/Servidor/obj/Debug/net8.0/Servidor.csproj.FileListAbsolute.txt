@@ -13,3 +13,7 @@ C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-jav
 C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio1\Servidor\obj\Debug\net8.0\Servidor.pdb
 C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio1\Servidor\obj\Debug\net8.0\Servidor.genruntimeconfig.cache
 C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio1\Servidor\obj\Debug\net8.0\ref\Servidor.dll
+C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio1\Servidor\bin\Debug\net8.0\NetworkStreamClass.dll
+C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio1\Servidor\bin\Debug\net8.0\NetworkStreamClass.pdb
+C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio1\Servidor\obj\Debug\net8.0\Servidor.csproj.AssemblyReference.cache
+C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio1\Servidor\obj\Debug\net8.0\Servidor.csproj.Up2Date

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using NetworkStreamNS;
 
 namespace Cliente
 {
@@ -15,10 +16,19 @@ namespace Cliente
 
                 // Obtener el NetworkStream
                 NetworkStream stream = cliente.GetStream();
-                Console.WriteLine("Stream de red obtenido en cliente.");
+                //Enviar "INICIO"
+                NetworkStreamClass.EscribirMensajeNetworkStream(stream, "INICIO");
+                Console.WriteLine("Mensaje 'INICIO' enviado al servidor.");
 
+                //Leer ID enviado por el servidor
+                string idRecibido = NetworkStreamClass.LeerMensajeNetworkStream(stream);
+                Console.WriteLine($"ID recibido del servidor: {idRecibido}");
 
-                cliente.Close(); // Cierra la conexión
+                //Enviar confirmación de vuelta
+                NetworkStreamClass.EscribirMensajeNetworkStream(stream, idRecibido);
+                Console.WriteLine("ID confirmado al servidor.");
+
+                cliente.Close();
                 Console.WriteLine("Conexión cerrada.");
             }
             catch (Exception ex)
