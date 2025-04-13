@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NetworkStreamClass")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2067577d97f2520694580b38726d8a8f0ca8705")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+565a507569ed68800ceb4896e197f8ec2fb88258")]
 [assembly: System.Reflection.AssemblyProductAttribute("NetworkStreamClass")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NetworkStreamClass")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
