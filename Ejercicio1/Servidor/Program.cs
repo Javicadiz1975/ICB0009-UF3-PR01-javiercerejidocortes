@@ -14,15 +14,23 @@ namespace Servidor
             TcpListener servidor = new TcpListener(IPAddress.Any, 5000);
             servidor.Start();
 
-            // Acepta un solo cliente
-            TcpClient cliente = servidor.AcceptTcpClient();
-            Console.WriteLine("Cliente conectado.");
+            // Bucle infinito para aceptar muchos clientes
+            while (true)
+            {
+                TcpClient cliente = servidor.AcceptTcpClient();
+                Console.WriteLine("Nuevo cliente conectado.");
 
-            // Cierra la conexión
+                // Crear un hilo por cliente
+                Thread hiloCliente = new Thread(() => GestionarVehiculo(cliente));
+                hiloCliente.Start();
+            }
+        }
+
+        // Método que simula la gestión de un vehículo
+        static void GestionarVehiculo(TcpClient cliente)
+        {
+            Console.WriteLine("Gestionando nuevo vehículo...");
             cliente.Close();
-            servidor.Stop();
-
-            Console.WriteLine("Conexión cerrada. Fin del servidor.");
         }
     }
 }
