@@ -13,6 +13,11 @@ namespace Cliente
                 TcpClient cliente = new TcpClient("127.0.0.1", 5000); // Conexión al servidor
                 Console.WriteLine("Conectado al servidor.");
 
+                // Obtener el NetworkStream
+                NetworkStream stream = cliente.GetStream();
+                Console.WriteLine("Stream de red obtenido en cliente.");
+
+
                 cliente.Close(); // Cierra la conexión
                 Console.WriteLine("Conexión cerrada.");
             }

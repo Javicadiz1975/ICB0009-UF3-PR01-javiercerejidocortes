@@ -45,8 +45,12 @@ namespace Servidor
             Random rnd = new Random();
             direccion = rnd.Next(2) == 0 ? "Norte" : "Sur";
 
-            Console.WriteLine($"Gestionando nuevo vehículo...");
+            Console.WriteLine("Gestionando nuevo vehículo...");
             Console.WriteLine($"Vehículo ID: {id}, Dirección asignada: {direccion}");
+
+            // Obtener el NetworkStream
+            NetworkStream stream = cliente.GetStream();
+            Console.WriteLine($"Stream obtenido para el vehículo ID {id}");
 
             cliente.Close();
         }
