@@ -6,6 +6,8 @@ namespace Servidor
 {
     class Program
     {
+        static int contadorVehiculos = 0; // Contador global de IDs
+        static readonly object lockObj = new object(); // Objeto para proteger el acceso concurrente
         static void Main(string[] args)
         {
             Console.WriteLine("Servidor iniciado. Esperando un cliente...");
@@ -28,8 +30,24 @@ namespace Servidor
 
         // Método que simula la gestión de un vehículo
         static void GestionarVehiculo(TcpClient cliente)
-        {
-            Console.WriteLine("Gestionando nuevo vehículo...");
+        { 
+            int id;
+            string direccion;
+
+            // Bloque protegido para asignar ID de forma segura
+            lock (lockObj)
+            {
+                contadorVehiculos++;
+                id = contadorVehiculos;
+            }
+
+             // Dirección aleatoria
+            Random rnd = new Random();
+            direccion = rnd.Next(2) == 0 ? "Norte" : "Sur";
+
+            Console.WriteLine($"Gestionando nuevo vehículo...");
+            Console.WriteLine($"Vehículo ID: {id}, Dirección asignada: {direccion}");
+
             cliente.Close();
         }
     }
