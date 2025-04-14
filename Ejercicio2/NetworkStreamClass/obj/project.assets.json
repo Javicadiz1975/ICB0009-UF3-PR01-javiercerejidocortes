@@ -4,7 +4,7 @@
     "net8.0": {
       "Carretera/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
+        "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "Vehiculo": "1.0.0"
         },

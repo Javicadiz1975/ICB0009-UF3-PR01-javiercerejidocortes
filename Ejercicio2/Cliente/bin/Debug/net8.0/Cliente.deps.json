@@ -21,7 +21,10 @@
           "Vehiculo": "1.0.0"
         },
         "runtime": {
-          "Carretera.dll": {}
+          "Carretera.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "NetworkStreamClass/1.0.0": {
@@ -30,12 +33,18 @@
           "Vehiculo": "1.0.0"
         },
         "runtime": {
-          "NetworkStreamClass.dll": {}
+          "NetworkStreamClass.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Vehiculo/1.0.0": {
         "runtime": {
-          "Vehiculo.dll": {}
+          "Vehiculo.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
