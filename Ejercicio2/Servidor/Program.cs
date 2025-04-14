@@ -8,11 +8,13 @@ using NetworkStreamNS;
 using CarreteraClass;
 using VehiculoClass;
 
+
 namespace Servidor
 {
 
     class Program
-    {   static Carretera carretera = new Carretera();
+    {   
+        static Carretera carretera = new Carretera();
         static int contadorVehiculos = 0;
         static object lockObj = new object();
 
@@ -58,21 +60,48 @@ namespace Servidor
                     vehiculo.Id = contadorVehiculos;
                 }
 
+                // Enviar ID de vuelta al cliente
+                NetworkStreamClass.EscribirMensajeNetworkStream(stream, vehiculo.Id.ToString());
+
                 // Añadir el vehículo a la carretera
                 carretera.AñadirVehiculo(vehiculo);
 
                 // Mostrar todos los vehículos actuales
                 Console.WriteLine("\n Vehículos en carretera:");
-                foreach (Vehiculo v in carretera.VehiculosEnCarretera)
-                {
-                    Console.WriteLine($"ID: {v.Id}, Dirección: {v.Direccion}, Posición: {v.Pos}");
-                }
 
+                while (!vehiculo.Acabado)
+                {
+                    if (stream.DataAvailable)
+                    {
+                        Vehiculo datosRecibidos = NetworkStreamClass.LeerDatosVehiculoNS(stream);
+
+                        carretera.ActualizarVehiculo(datosRecibidos);
+                        
+                        // Refrescar referencia local
+                        vehiculo = carretera.VehiculosEnCarretera.FirstOrDefault(v => v.Id == datosRecibidos.Id);
+
+                        MostrarCarretera();
+                    }
+
+                    Thread.Sleep(50);
+                }
+                Console.WriteLine("No hay vehiculos en la carretera.");       
                 cliente.Close();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error al gestionar vehículo: " + ex.Message);
+            }
+        }
+
+        static void MostrarCarretera()
+        {
+            Console.Clear();
+            Console.WriteLine("Estado actual de la carretera:");
+            foreach (Vehiculo v in carretera.VehiculosEnCarretera)
+            {
+                string estado = v.Acabado ? "Finalizado" : $"Km {v.Pos}";
+                Console.WriteLine($"Vehiculo con ID {v.Id} [{v.Direccion}] - {estado}");
             }
         }
     

@@ -21,10 +21,10 @@ public class Vehiculo
         this.Velocidad = randVelocidad.Next(100,500);
         this.Direccion = randVelocidad.Next(0, 2) == 0 ? "Norte" : "Sur";
         this.Acabado = false;
-        this.Parado = false;
+ 
        
     }
-
+    
     //Permite serializar Vehiculo a array de bytes mediant formato XML
     public byte[] VehiculoaBytes()
     {

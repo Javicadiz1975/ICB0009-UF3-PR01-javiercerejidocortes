@@ -41,6 +41,8 @@ public class Carretera
         {
             veh.Pos = V.Pos; // Actualiza la posición
             veh.Velocidad = V.Velocidad; // Actualiza la velocidad
+            veh.Acabado = V.Acabado; // Marca como acabado
+ 
         }
     }
 
