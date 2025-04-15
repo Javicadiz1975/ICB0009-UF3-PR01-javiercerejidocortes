@@ -9,6 +9,7 @@ using CarreteraClass;
 using VehiculoClass;
 
 
+
 namespace Servidor
 {
 
@@ -17,6 +18,9 @@ namespace Servidor
         static Carretera carretera = new Carretera();
         static int contadorVehiculos = 0;
         static object lockObj = new object();
+
+        static List<NetworkStream> listaStreams = new List<NetworkStream>();
+
 
         static void Main(string[] args)
         { 
@@ -50,6 +54,11 @@ namespace Servidor
             {
                 NetworkStream stream = cliente.GetStream();
 
+                lock (lockObj)
+                {
+                    listaStreams.Add(stream);
+                }
+
                 // Leer el vehículo recibido
                 Vehiculo vehiculo = NetworkStreamClass.LeerDatosVehiculoNS(stream);
 
@@ -75,10 +84,17 @@ namespace Servidor
                     {
                         Vehiculo datosRecibidos = NetworkStreamClass.LeerDatosVehiculoNS(stream);
 
-                        carretera.ActualizarVehiculo(datosRecibidos);
+                         lock (lockObj)
+                        {
+                            carretera.ActualizarVehiculo(datosRecibidos);
+                        }
                         
                         // Refrescar referencia local
                         vehiculo = carretera.VehiculosEnCarretera.FirstOrDefault(v => v.Id == datosRecibidos.Id);
+                        lock (lockObj) // Proteger envío concurrente
+                        {
+                            EnviarCarreteraATodos();
+                        }
 
                         MostrarCarretera();
                     }
@@ -98,10 +114,29 @@ namespace Servidor
         {
             Console.Clear();
             Console.WriteLine("Estado actual de la carretera:");
-            foreach (Vehiculo v in carretera.VehiculosEnCarretera)
+            foreach (var v in carretera.VehiculosEnCarretera)
             {
                 string estado = v.Acabado ? "Finalizado" : $"Km {v.Pos}";
-                Console.WriteLine($"Vehiculo con ID {v.Id} [{v.Direccion}] - {estado}");
+                Console.WriteLine($"ID {v.Id} [{v.Direccion}] - {estado}");
+            }
+        }
+
+        static void EnviarCarreteraATodos()
+        {
+            byte[] datos = carretera.CarreteraABytes();
+            byte[] longitud = BitConverter.GetBytes(datos.Length);
+
+            foreach (var stream in listaStreams.ToList())
+            {
+                try
+                {
+                    stream.Write(longitud, 0, 4);  // Enviar longitud primero
+                    stream.Write(datos, 0, datos.Length);  // Luego los datos
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al enviar a un cliente: " + ex.Message);
+                }
             }
         }
     
