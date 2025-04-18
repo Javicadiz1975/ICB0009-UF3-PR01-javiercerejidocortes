@@ -74,9 +74,7 @@ Carretera LeerDatosCarreteraNS(NetworkStream NS)
 
 > Se utiliza `try-catch` para evitar errores por desconexión o escritura inválida.
 
-📸 **Capturas de pantalla**
 
-![alt text](image-2.png)
 
 ---
 

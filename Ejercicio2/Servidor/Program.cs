@@ -101,7 +101,12 @@ namespace Servidor
 
                     Thread.Sleep(50);
                 }
-                Console.WriteLine("No hay vehiculos en la carretera.");       
+                Console.WriteLine("No hay vehiculos en la carretera.");
+
+                lock (lockObj)
+                {
+                    listaStreams.Remove(stream);
+                }       
                 cliente.Close();
             }
             catch (Exception ex)
@@ -126,6 +131,8 @@ namespace Servidor
             byte[] datos = carretera.CarreteraABytes();
             byte[] longitud = BitConverter.GetBytes(datos.Length);
 
+            List<NetworkStream> streamsInvalidos = new List<NetworkStream>();
+
             foreach (var stream in listaStreams.ToList())
             {
                 try
@@ -136,6 +143,17 @@ namespace Servidor
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error al enviar a un cliente: " + ex.Message);
+                    streamsInvalidos.Add(stream); // Marcar para eliminar
+                }
+            }
+
+            // Eliminar streams que han fallado
+            lock (lockObj)
+            {
+                foreach (var s in streamsInvalidos)
+                {
+                    listaStreams.Remove(s);
+                    try { s.Close(); } catch {}
                 }
             }
         }
