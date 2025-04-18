@@ -1,92 +1,81 @@
-# Simulación de Tráfico – Ejercicio 2: Intercambio de Información entre Vehículos
 
-Este proyecto simula una carretera con varios vehículos circulando desde el cliente hacia el servidor. Se ha implementado una arquitectura cliente-servidor donde cada cliente representa un vehículo que envía su posición al servidor, y este a su vez transmite el estado completo de la carretera a todos los clientes conectados.
+# 🚧 Ejercicio 3 – Simulación de Tráfico: Paso Único por el Puente
 
----
-
-## ⚙️ Tecnologías utilizadas
-
-- .NET Core / C#
-- Programación concurrente (`Thread`)
-- Serialización XML
-- Sockets TCP
-- Streams (`NetworkStream`)
-- Manejo de excepciones con `try-catch`
+> Proyecto DAM · Programación Concurrente en C# · Simulación Cliente-Servidor
 
 ---
 
-## Etapas del proyecto
+## 🎯 Objetivo del ejercicio
 
-### Etapa 0: Clases Vehículo y Carretera
-
-- `Vehiculo`: contiene propiedades como `Id`, `Pos`, `Velocidad`, `Direccion`, `Parado`, `Acabado`.
-- `Carretera`: mantiene la lista de vehículos activos y su estado en la carretera.
+Simular una carretera donde **solo un vehículo puede cruzar el puente al mismo tiempo**, gestionando:
+- La **sincronización del paso** por el puente.
+- El **orden de entrada y salida**.
+- La **visualización del estado** en consola desde cliente y servidor.
 
 ---
 
-### Etapa 1: Programación de métodos en `NetworkStreamClass`
+## 🔁 Flujo de ejemplo
 
-Se implementaron los siguientes métodos para gestionar los streams de forma eficiente:
+```
+1. Vehículo #1 (Norte) entra al puente
+   → Servidor: vehiculoEnPuenteId = 1
 
+2. Vehículo #2 (Norte) intenta entrar
+   → Servidor: Esperando, puente ocupado
+
+3. Vehículo #1 sale del puente
+   → Servidor: vehiculoEnPuenteId = null
+
+4. Vehículo #2 recibe permiso para cruzar
+```
+
+---
+
+## ⚙️ Requisitos técnicos cumplidos
+
+- ✅ Registro del vehículo en el puente desde el **servidor**.
+- ✅ Control de concurrencia usando `SemaphoreSlim`.
+- ✅ Cola de espera para vehículos en **función de su dirección**.
+- ✅ Clientes actualizan y muestran el estado:  
+  `"Esperando"`, `"Cruzando puente"`, `"En trayecto"`, `"Finalizado"`.
+- ✅ Logs visuales y detallados en consola.
+
+---
+
+## ❓ Preguntas teóricas
+
+### 1. ¿Dónde debe estar el control del túnel: en cliente o servidor?
+
+| En Cliente               | En Servidor              |
+|--------------------------|--------------------------|
+| ❌ Dificultad de sincronización global | ✅ Control centralizado |
+| ❌ Posibles inconsistencias | ✅ Evita colisiones |
+| ❌ Código repetido en cada cliente | ✅ Clientes más simples |
+
+🔍 **Conclusión:**  
+El **control debe estar en el servidor**, ya que es el único que tiene visión global del sistema y puede garantizar acceso exclusivo de forma segura y sincronizada.
+
+---
+
+### 2. ¿Cómo gestionas las colas de espera por dirección? ¿Qué estructura usas?
+
+✅ Se utilizan **dos colas FIFO** (`Queue<Vehiculo>`) por dirección:
+
+- `colaNorte`
+- `colaSur`
+
+🔍 **Ventajas:**
+- Mantienen el **orden de llegada** (First-In-First-Out).
+- Permiten priorizar o alternar sentidos si fuera necesario.
+- Son fáciles de manejar para sacar y meter vehículos.
+
+Ejemplo:
 ```csharp
-EscribirDatosVehiculoNS(NetworkStream NS, Vehiculo V)
-LeerDatosVehiculoNS(NetworkStream NS)
-EscribirDatosCarreteraNS(NetworkStream NS, Carretera C)
-Carretera LeerDatosCarreteraNS(NetworkStream NS)
+Queue<Vehiculo> colaNorte = new Queue<Vehiculo>();
+Queue<Vehiculo> colaSur = new Queue<Vehiculo>();
 ```
 
----
-
-### Etapa 2: Crear y enviar un Vehículo
-
-- El cliente crea un vehículo y lo envía al servidor al conectarse.
-- El servidor lo recibe, le asigna un `Id` y lo añade a la carretera.
 
 ---
-
-### Etapa 3: Mover los vehículos
-
-- El cliente avanza su vehículo con un `Thread.Sleep(vehiculo.Velocidad)`.
-- En cada paso, se actualiza la posición y se envía al servidor.
-- El servidor actualiza la lista y muestra la carretera.
-- Al llegar a 100 km, el vehículo se marca como `Acabado`.
-
----
-
-### Etapa 4: Enviar carretera a todos los clientes
-
-- Cada vez que el servidor recibe una actualización, la transmite a **todos** los clientes conectados mediante su `NetworkStream`.
-- Se envía el objeto `Carretera` serializado junto a su longitud.
-
----
-
-### Etapa 5: Recepción de información del servidor en los clientes
-
-- Cada cliente lanza un hilo secundario que escucha permanentemente el servidor.
-- Al recibir una actualización de la carretera, la deserializa y la muestra en pantalla.
-
-```text
-Información recibida del servidor:
-Vehículo 1 [Norte] - Km 42
-Vehículo 2 [Sur]   - Finalizado
-```
-
-> Se utiliza `try-catch` para evitar errores por desconexión o escritura inválida.
-
----
-
-## 🎯 Resultado esperado
-
-Cada cliente puede ver el avance de todos los vehículos en tiempo real gracias a la retransmisión del servidor.
-
-```text
-Información recibida del servidor:
-Vehículo 1 [Norte] - En trayecto
-Vehículo 2 [Sur]   - Finalizado
-Vehículo 3 [Norte] - En trayecto
-```
-
----
-
 **Autor**: Javier Cerejido Cortés  
 **Asignatura**: ICB0009 - Programación de Servicios y Procesos

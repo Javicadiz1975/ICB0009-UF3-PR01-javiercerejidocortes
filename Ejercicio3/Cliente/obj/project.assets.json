@@ -71,11 +71,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\Cliente\\Cliente.csproj",
+      "projectUniqueName": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\Cliente\\Cliente.csproj",
       "projectName": "Cliente",
-      "projectPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\Cliente\\Cliente.csproj",
+      "projectPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\Cliente\\Cliente.csproj",
       "packagesPath": "C:\\Users\\ivajc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\Cliente\\obj\\",
+      "outputPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\Cliente\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ivajc\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -90,14 +90,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\Carretera\\Carretera.csproj": {
-              "projectPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\Carretera\\Carretera.csproj"
+            "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\Carretera\\Carretera.csproj": {
+              "projectPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\Carretera\\Carretera.csproj"
             },
-            "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\NetworkStreamClass\\NetworkStreamClass.csproj": {
-              "projectPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\NetworkStreamClass\\NetworkStreamClass.csproj"
+            "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\NetworkStreamClass\\NetworkStreamClass.csproj": {
+              "projectPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\NetworkStreamClass\\NetworkStreamClass.csproj"
             },
-            "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\Vehiculo\\Vehiculo.csproj": {
-              "projectPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\Vehiculo\\Vehiculo.csproj"
+            "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\Vehiculo\\Vehiculo.csproj": {
+              "projectPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\Vehiculo\\Vehiculo.csproj"
             }
           }
         }

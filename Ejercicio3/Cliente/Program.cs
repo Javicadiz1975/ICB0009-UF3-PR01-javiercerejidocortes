@@ -1,82 +1,124 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Net;
-using System.Text;
-using System.IO;
 using System.Threading;
 using NetworkStreamNS;
 using CarreteraClass;
 using VehiculoClass;
+using System.Linq;
 
 namespace Client
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             try
             {
-                TcpClient cliente = new TcpClient("127.0.0.1", 5000);
-                NetworkStream stream = cliente.GetStream();
+                Console.WriteLine("Conectando al servidor...");
+                using TcpClient cliente = new TcpClient("127.0.0.1", 5000);
+                using NetworkStream stream = cliente.GetStream();
+                using CancellationTokenSource cts = new CancellationTokenSource();
 
-                // Crear el vehículo
                 Vehiculo miVehiculo = new Vehiculo();
-                Console.WriteLine($"Vehículo creado. Dirección: {miVehiculo.Direccion} | Velocidad: {miVehiculo.Velocidad}ms");
+                Console.WriteLine($"🚗 Vehículo creado. Dirección: {miVehiculo.Direccion} | Velocidad: {miVehiculo.Velocidad}ms");
 
-                // enviar al servidor
                 NetworkStreamClass.EscribirDatosVehiculoNS(stream, miVehiculo);
-                Console.WriteLine($"Vehículo enviado. ID: {miVehiculo.Id} | Dirección: {miVehiculo.Direccion}");
-
-                // Recibir ID asignado por el servidor
                 string idStr = NetworkStreamClass.LeerMensajeNetworkStream(stream);
                 miVehiculo.Id = int.Parse(idStr);
-                Console.WriteLine($"Vehículo enviado. ID recibido: {miVehiculo.Id}");
+                Console.WriteLine($"📥 ID asignado: {miVehiculo.Id}");
 
-                //token para poder cancelar el hilo de escucha
-                CancellationTokenSource cts = new CancellationTokenSource();
-
-                // Iniciar hilo para escuchar datos de la carretera
-                Thread hiloRecepcion = new Thread(() => EscucharServidor(stream, cts.Token));
+                Thread hiloRecepcion = new Thread(() => EscucharServidor(stream, cts.Token, miVehiculo));
                 hiloRecepcion.Start();
 
-                // Crear hilo para mover el vehículo
-                Thread hiloMovimiento = new Thread(() => MoverVehiculo(miVehiculo, stream));
-                hiloMovimiento.Start();
-                hiloMovimiento.Join();
-                Console.WriteLine("Movimiento terminado. Cerrando conexión.");
+                MoverVehiculo(miVehiculo, stream, cts);
 
-                cts.Cancel();
                 hiloRecepcion.Join();
-
-                stream.Close();
-                cliente.Close();
+                Console.WriteLine("✅ Conexión finalizada correctamente");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine($"❌ Error crítico: {ex.Message}");
             }
-
         }
-        static void MoverVehiculo(Vehiculo vehiculo, NetworkStream stream)
+
+        static void MoverVehiculo(Vehiculo vehiculo, NetworkStream stream, CancellationTokenSource cts)
         {
-            for (int i = 1; i <= 100; i++)
+            try
             {
-                vehiculo.Pos = i;
+                while (true)
+                {
+                    bool estaParado;
+                    int posicion;
 
-                // Enviar datos actualizados al servidor
-                NetworkStreamClass.EscribirDatosVehiculoNS(stream, vehiculo);
-                //Console.WriteLine($"Posición actual: {vehiculo.Pos} km");
-                Thread.Sleep(vehiculo.Velocidad);
+                    // 🔒 Leemos estado actual de forma segura
+                    lock (vehiculo)
+                    {
+                        if (vehiculo.Pos >= 100 || cts.Token.IsCancellationRequested)
+                            break;
+
+                        estaParado = vehiculo.Parado;
+                        posicion = vehiculo.Pos;
+                    }
+
+                    if (estaParado)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"[CLIENTE {vehiculo.Id}] ⛔ En espera (Km {posicion})");
+                        Thread.Sleep(300);
+                        continue;
+                    }
+
+                    // Actualizar posición solo si no está parado
+                    lock (vehiculo)
+                    {
+                        vehiculo.Pos++;
+
+                        try
+                        {
+                            NetworkStreamClass.EscribirDatosVehiculoNS(stream, vehiculo);
+                        }
+                        catch
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"[CLIENTE {vehiculo.Id}] ⚠️ Error enviando datos al servidor");
+                            Console.ResetColor();
+                            break;
+                        }
+
+                        string estado = vehiculo.Pos == 10 ? $"🚦 Intentando cruzar el puente"
+                                        : vehiculo.Pos > 10 && vehiculo.Pos < 50 ? $"🌉 Cruzando puente"
+                                        : $"🛣️ Circulando";
+
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine($"[CLIENTE {vehiculo.Id}] {estado} (Km {vehiculo.Pos})");
+                        Console.ResetColor();
+                    }
+
+                    Thread.Sleep(vehiculo.Velocidad);
+                }
+
+                // Finalización
+                lock (vehiculo)
+                {
+                    vehiculo.Acabado = true;
+                    NetworkStreamClass.EscribirDatosVehiculoNS(stream, vehiculo);
+        
+                    Console.WriteLine($"[CLIENTE {vehiculo.Id}] 🎉 ¡Recorrido completado!");
+            
+                }
+
+                cts.Cancel(); // Cancela el hilo receptor
             }
-
-            // Marcar como terminado y enviar
-            vehiculo.Acabado = true;
-            NetworkStreamClass.EscribirDatosVehiculoNS(stream, vehiculo);
-            Console.WriteLine("Vehículo ha completado su recorrido.");
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"[CLIENTE {vehiculo.Id}] ⚠️ Error en movimiento: {ex.Message}");
+                Console.ResetColor();
+            }
         }
 
-        static void EscucharServidor(NetworkStream stream, CancellationToken token)
+        static void EscucharServidor(NetworkStream stream, CancellationToken token, Vehiculo vehiculo)
         {
             try
             {
@@ -84,12 +126,10 @@ namespace Client
                 {
                     if (stream.DataAvailable)
                     {
-                        // Leer la longitud del mensaje (4 bytes)
                         byte[] bufferLongitud = new byte[4];
                         stream.Read(bufferLongitud, 0, 4);
                         int longitud = BitConverter.ToInt32(bufferLongitud, 0);
 
-                        // Leer el contenido XML según longitud
                         byte[] bufferDatos = new byte[longitud];
                         int totalLeido = 0;
                         while (totalLeido < longitud)
@@ -100,27 +140,51 @@ namespace Client
                         }
 
                         Carretera carretera = Carretera.BytesACarretera(bufferDatos);
+                        if (carretera == null) continue;
 
-                        Console.WriteLine("\nInformación recibida del servidor:");
-                        foreach (Vehiculo v in carretera.VehiculosEnCarretera)
+                        lock (vehiculo)
                         {
-                            string estado = v.Pos >= 100 ? "Finalizado" : "En trayecto";
-                            Console.WriteLine($"→ Vehículo {v.Id} [{v.Direccion}] - {estado} (Km {v.Pos})");
+                            var actualizado = carretera.VehiculosEnCarretera.FirstOrDefault(v => v.Id == vehiculo.Id);
+                            if (actualizado != null)
+                            {
+                                bool estabaParadoAntes = vehiculo.Parado;
+                                vehiculo.Parado = actualizado.Parado;
+
+                                // Entrando al puente por primera vez tras esperar
+                                if (estabaParadoAntes && !vehiculo.Parado && vehiculo.Pos == 10)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Magenta;
+                                    Console.WriteLine($"[CLIENTE {vehiculo.Id}] 🚦 Entrando al puente desde Km 10");
+                                    Console.ResetColor();
+                                }
+                            }
+                        }
+
+                        // Log del estado general de la carretera
+                        Console.WriteLine("\n📡 Estado actualizado del servidor:");
+                        foreach (var v in carretera.VehiculosEnCarretera.OrderBy(v => v.Id))
+                        {
+                            string estado = v.Acabado ? $"✅ Finalizado (Km {v.Pos})"
+                                        : v.Parado ? $"⛔ Esperando (Km {v.Pos})"
+                                        : v.Pos == 10 ? $"🚦 Intentando cruzar (Km {v.Pos})"
+                                        : v.Pos > 10 && v.Pos < 50 ? $"🌉 Cruzando puente (Km {v.Pos})"
+                                        : $"🛣️ En trayecto (Km {v.Pos})";
+
+                            Console.WriteLine($"→ Vehículo {v.Id} [{v.Direccion}] - {estado}");
                         }
                         Console.WriteLine();
                     }
 
-                    Thread.Sleep(200);
+                    Thread.Sleep(100);
                 }
             }
             catch (Exception ex)
             {
-                if (!token.IsCancellationRequested)
-                {
-                    Console.WriteLine($"⚠️ Error al recibir datos del servidor: {ex.Message}");
-                }
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error en recepción: {ex.Message}");
+                Console.ResetColor();
             }
         }
-
     }
 }
+

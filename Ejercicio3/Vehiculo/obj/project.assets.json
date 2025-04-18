@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\Vehiculo\\Vehiculo.csproj",
+      "projectUniqueName": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\Vehiculo\\Vehiculo.csproj",
       "projectName": "Vehiculo",
-      "projectPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\Vehiculo\\Vehiculo.csproj",
+      "projectPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\Vehiculo\\Vehiculo.csproj",
       "packagesPath": "C:\\Users\\ivajc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio2\\Vehiculo\\obj\\",
+      "outputPath": "C:\\Users\\ivajc\\Desktop\\M09\\UF3 Sockets y Servicios\\Practica\\ICB0009-UF3-PR01-javiercerejidocortes\\Ejercicio3\\Vehiculo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ivajc\\AppData\\Roaming\\NuGet\\NuGet.Config"
