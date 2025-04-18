@@ -1,10 +1,6 @@
 
 # 🚧 Ejercicio 3 – Simulación de Tráfico: Paso Único por el Puente
 
-> Proyecto DAM · Programación Concurrente en C# · Simulación Cliente-Servidor
-
----
-
 ## 🎯 Objetivo del ejercicio
 
 Simular una carretera donde **solo un vehículo puede cruzar el puente al mismo tiempo**, gestionando:
@@ -74,7 +70,15 @@ Ejemplo:
 Queue<Vehiculo> colaNorte = new Queue<Vehiculo>();
 Queue<Vehiculo> colaSur = new Queue<Vehiculo>();
 ```
+📸 **Capturas de pantalla**
 
+Servidor
+
+![alt text](image.png)
+
+Clienta
+
+![alt text](image-1.png)
 
 ---
 **Autor**: Javier Cerejido Cortés  

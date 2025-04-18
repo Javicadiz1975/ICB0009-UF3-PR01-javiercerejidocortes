@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Carretera")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+91f92f549780bb6f177b78784f9e1216587d2337")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7fe9deff4e249a13404663c8d5ad32a2f43c8c3f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Carretera")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Carretera")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
