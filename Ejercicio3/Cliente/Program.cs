@@ -63,7 +63,7 @@ namespace Client
 
                     if (estaParado)
                     {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        
                         Console.WriteLine($"[CLIENTE {vehiculo.Id}] ⛔ En espera (Km {posicion})");
                         Thread.Sleep(300);
                         continue;
@@ -80,7 +80,7 @@ namespace Client
                         }
                         catch
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
+                            
                             Console.WriteLine($"[CLIENTE {vehiculo.Id}] ⚠️ Error enviando datos al servidor");
                             Console.ResetColor();
                             break;
@@ -90,7 +90,7 @@ namespace Client
                                         : vehiculo.Pos > 10 && vehiculo.Pos < 50 ? $"🌉 Cruzando puente"
                                         : $"🛣️ Circulando";
 
-                        Console.ForegroundColor = ConsoleColor.Cyan;
+                       
                         Console.WriteLine($"[CLIENTE {vehiculo.Id}] {estado} (Km {vehiculo.Pos})");
                         Console.ResetColor();
                     }
@@ -112,7 +112,7 @@ namespace Client
             }
             catch (Exception ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                
                 Console.WriteLine($"[CLIENTE {vehiculo.Id}] ⚠️ Error en movimiento: {ex.Message}");
                 Console.ResetColor();
             }
@@ -180,9 +180,9 @@ namespace Client
             }
             catch (Exception ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                
                 Console.WriteLine($"Error en recepción: {ex.Message}");
-                Console.ResetColor();
+               
             }
         }
     }

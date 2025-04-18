@@ -33,3 +33,15 @@ C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-jav
 C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\refint\Vehiculo.dll
 C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\Vehiculo.pdb
 C:\Users\ivajc\Desktop\M09\UF3 Sockets y Servicios\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\ref\Vehiculo.dll
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\bin\Debug\net8.0\Vehiculo.deps.json
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\bin\Debug\net8.0\Vehiculo.dll
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\bin\Debug\net8.0\Vehiculo.pdb
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\Vehiculo.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\Vehiculo.AssemblyInfoInputs.cache
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\Vehiculo.AssemblyInfo.cs
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\Vehiculo.csproj.CoreCompileInputs.cache
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\Vehiculo.sourcelink.json
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\Vehiculo.dll
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\refint\Vehiculo.dll
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\Vehiculo.pdb
+C:\Users\ivajc\Desktop\M09\UF2 Procesos e hilos\Practica\ICB0009-UF3-PR01-javiercerejidocortes\Ejercicio3\Vehiculo\obj\Debug\net8.0\ref\Vehiculo.dll
