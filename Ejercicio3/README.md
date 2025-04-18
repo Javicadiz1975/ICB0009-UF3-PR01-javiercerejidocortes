@@ -76,7 +76,7 @@ Servidor
 
 ![alt text](image.png)
 
-Clienta
+Cliente
 
 ![alt text](image-1.png)
 

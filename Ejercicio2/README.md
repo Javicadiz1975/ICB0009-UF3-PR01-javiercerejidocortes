@@ -42,6 +42,10 @@ Carretera LeerDatosCarreteraNS(NetworkStream NS)
 - El cliente crea un vehículo y lo envía al servidor al conectarse.
 - El servidor lo recibe, le asigna un `Id` y lo añade a la carretera.
 
+📸 **Capturas de pantalla**
+
+![alt text](image.png)
+
 ---
 
 ### Etapa 3: Mover los vehículos
@@ -51,6 +55,9 @@ Carretera LeerDatosCarreteraNS(NetworkStream NS)
 - El servidor actualiza la lista y muestra la carretera.
 - Al llegar a 100 km, el vehículo se marca como `Acabado`.
 
+📸 **Capturas de pantalla**
+
+![alt text](<etapa3 ejercicio2.png>)
 ---
 
 ### Etapa 4: Enviar carretera a todos los clientes
@@ -65,13 +72,11 @@ Carretera LeerDatosCarreteraNS(NetworkStream NS)
 - Cada cliente lanza un hilo secundario que escucha permanentemente el servidor.
 - Al recibir una actualización de la carretera, la deserializa y la muestra en pantalla.
 
-```text
-Información recibida del servidor:
-Vehículo 1 [Norte] - Km 42
-Vehículo 2 [Sur]   - Finalizado
-```
-
 > Se utiliza `try-catch` para evitar errores por desconexión o escritura inválida.
+
+📸 **Capturas de pantalla**
+
+![alt text](image-2.png)
 
 ---
 
@@ -79,12 +84,9 @@ Vehículo 2 [Sur]   - Finalizado
 
 Cada cliente puede ver el avance de todos los vehículos en tiempo real gracias a la retransmisión del servidor.
 
-```text
-Información recibida del servidor:
-Vehículo 1 [Norte] - En trayecto
-Vehículo 2 [Sur]   - Finalizado
-Vehículo 3 [Norte] - En trayecto
-```
+📸 **Capturas de pantalla**
+
+![alt text](image-1.png)
 
 ---
 
